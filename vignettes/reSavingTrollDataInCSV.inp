@@ -1,0 +1,16 @@
+// Eduard Bukin 06-02-2016 
+// In order to run R routines we needed to resave data in this way 
+// Resaving cosimo baseline data in the CSV forma
+ACCESS cosimobase type trolltxt id cosimobase.txt mode r;
+search cosimobase;
+DOSAVE sysdata = (DFLIST("cosimobase" , "*_*_*"));
+&download  sysdata   "V:/temp standalones validation/mod_QA_generic/data/cosimobase.csv"  2000a 2030a "cosimobase";
+
+
+// Resaving last year baseline data
+ACCESS lastBaseLine type trolltxt id V:\\2016\\Master\\VieCos\\output.txt mode r;
+search lastBaseLine;
+DOSAVE sysdata = (DFLIST("lastBaseLine" , "*_*_*"));
+&download  sysdata   "V:/temp standalones validation/mod_QA_generic/data/lastBaseLine.csv"  2000a 2025a "lastBaseLine";
+
+
