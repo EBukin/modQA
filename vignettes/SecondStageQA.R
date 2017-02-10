@@ -30,8 +30,7 @@
 #          '  `-.   `'    \/\`.   `.    ) 
 #                \  -hrr-    \ `.  |    | 
 ### Commodities lists 
-commodity <- c("MK", "BT", "CH", "SMP", "WMP", "FDP", "BV", "PK",
-               "PT", "SH", "CN", "FDN", "OOS", "PL", "PM", "SB", "VL")
+commodity <- c("RU", "NR")
 # commodity <- c( "SH")
 
 # Setups ------------------------------------------------------------------
@@ -112,12 +111,7 @@ all_data_c <-
   filter(ItemCode != "ME") %>% 
   select(-POP_ME, - CPI_ME) %>% 
   gather(ElementCode, Value, 5:length(.)) %>% 
-  filter(!is.na(Value))
-
-# Preparing data for plotting and ordering variables  ---------------------
-
-p_data <-
-  all_data_c  %>% 
+  filter(!is.na(Value)) %>% 
   right_join(all_vars , by = c("ItemCode", "ElementCode")) %>% 
   
   # After we join data to the list of items and elements which we want to plot,
@@ -130,9 +124,15 @@ p_data <-
   # Adding lables
   join_names()  %>% 
   arrange(RegionOrder, AreaCode, ItemOrder, ElementSubOrder, ElementOrder, Year) %>% 
+  filter(Year %in% plotting_range)
+
+# Preparing data for plotting and ordering variables  ---------------------
+
+p_data <-
+  all_data_c   %>% 
   
   # Final filtering data
-  filter(Year %in% plotting_range, ItemCode %in% commodity)
+  filter(ItemCode %in% commodity)
 
 
 # Plotting everything -----------------------------------------------------
